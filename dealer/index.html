@@ -1,208 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dominion Dealer</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			-webkit-tap-highlight-color: transparent;
+		}
 
-<title>Deck Draw</title>
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background: radial-gradient(circle at top, #243b64, #101828 55%);
+			color: #fff;
+		}
 
-<style>
+		.container {
+			width: min(92vw, 430px);
+			padding: 20px;
+		}
 
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
+		h1 {
+			text-align: center;
+			font-size: 2.3rem;
+			margin: 0 0 24px;
+		}
 
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:
-        radial-gradient(circle at top,#243b64,#101828 55%);
-    color:white;
-}
+		.card {
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			backdrop-filter: blur(10px);
+			border-radius: 22px;
+			padding: 18px;
+			margin-bottom: 20px;
+		}
 
-.container{
-    width:min(90vw,420px);
-    text-align:center;
-}
+		.expansion-header {
+			display: flex;
+			justify-content: space-between;
+			font-weight: 700;
+			cursor: pointer;
+		}
 
-h1{
-    font-size:2.5rem;
-    margin:0 0 45px;
-    font-weight:800;
-    letter-spacing:-1px;
-}
+		.expansion-list {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin-top: 14px;
+		}
 
-.result-card{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(12px);
-    border-radius:28px;
-    padding:35px 20px;
-    margin-bottom:30px;
-    min-height:170px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+		.expansion {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-#result{
-    font-size:2rem;
-    line-height:1.5;
-    font-weight:700;
-}
+		.expansion input {
+			width: 22px;
+			height: 22px;
+			cursor: pointer;
+		}
 
-#result span{
-    color:#60a5fa;
-}
+		.more-btn {
+			background: transparent;
+			border: 1px dashed rgba(255, 255, 255, 0.3);
+			color: #9ca3af;
+			padding: 8px 12px;
+			border-radius: 12px;
+			cursor: pointer;
+			font-size: 0.9rem;
+			font-weight: 600;
+			margin-top: 10px;
+			width: 100%;
+			transition: all 0.2s;
+		}
 
-button{
+		.more-btn:hover {
+			background: rgba(255, 255, 255, 0.05);
+			color: #fff;
+			border-color: rgba(255, 255, 255, 0.5);
+		}
 
-    width:100%;
-    padding:24px;
+		.draw-btn {
+			width: 100%;
+			padding: 22px;
+			border: none;
+			border-radius: 20px;
+			background: #2563eb;
+			color: #fff;
+			font-size: 1.3rem;
+			font-weight: 700;
+			cursor: pointer;
+			margin-bottom: 20px;
+		}
 
-    border:none;
-    border-radius:22px;
+		.draw-btn:active {
+			transform: scale(0.97);
+		}
 
-    background:#2563eb;
-    color:white;
+		#result {
+			text-align: center;
+			font-size: 1.2rem;
+			line-height: 1.8;
+		}
 
-    font-size:1.5rem;
-    font-weight:750;
+		#result span {
+			color: #60a5fa;
+			font-weight: 700;
+		}
 
-    cursor:pointer;
+		.footer {
+			text-align: center;
+			color: #9ca3af;
+		}
 
-    box-shadow:
-        0 10px 25px rgba(37,99,235,.35);
-
-    transition:.15s;
-}
-
-button:active{
-    transform:scale(.96);
-}
-
-
-.footer{
-
-    margin-top:35px;
-
-    color:#94a3b8;
-
-    font-size:.95rem;
-
-    line-height:1.5;
-
-}
-
-</style>
-
+		.hidden {
+			display: none !important;
+		}
+	</style>
 </head>
-
 
 <body>
 
+	<div class="container">
+		<h1>Dominion Dealer</h1>
 
-<div class="container">
+		<div class="card">
+			<div class="expansion-header" onclick="toggleAccordion()">
+				<span>Expansions</span>
+				<span id="expandIcon">▼</span>
+			</div>
 
+			<div id="expansionWrapper" class="">
+				<div id="ownedList" class="expansion-list"></div>
+				<button type="button" class="more-btn" id="moreBtn" onclick="toggleMoreExpansions()">More Expansions
+					▼</button>
+				<div id="moreList" class="expansion-list hidden"></div>
+			</div>
+		</div>
 
-<h1>Deck Draw</h1>
+		<button class="draw-btn" onclick="drawCards()">🎲 Draw 10 Cards</button>
 
+		<div class="card">
+			<div id="result"></div>
+		</div>
 
-<div class="result-card">
+		<div class="footer" id="footer"></div>
+	</div>
 
-<div id="result">
-Ready to draw
-</div>
+	<script>
+		const expansions = [
+			{ name: "Base", cards: 26, enabled: true },
+			{ name: "Hinterlands", cards: 26, enabled: false },
+			{ name: "Intrigue", cards: 26, enabled: false },
+			{ name: "Renaissance", cards: 25, enabled: false },
+			{ name: "Seaside", cards: 27, enabled: false },
+			{ name: "Alchemy", cards: 12, enabled: false },
+			{ name: "Prosperity", cards: 25, enabled: false },
+			{ name: "Cornucopia", cards: 13, enabled: false },
+			{ name: "Dark Ages", cards: 35, enabled: false },
+			{ name: "Guilds", cards: 13, enabled: false },
+			{ name: "Adventures", cards: 30, enabled: false },
+			{ name: "Empires", cards: 24, enabled: false },
+			{ name: "Nocturne", cards: 33, enabled: false },
+			{ name: "Menagerie", cards: 30, enabled: false },
+			{ name: "Allies", cards: 31, enabled: false },
+			{ name: "Plunder", cards: 40, enabled: false },
+			{ name: "Rising Sun", cards: 25, enabled: false }
+		];
 
-</div>
+		function buildList(items, containerEl) {
+			containerEl.innerHTML = items.map(exp => `
+		<label class="expansion">
+		  <span>${exp.name} (${exp.cards})</span>
+		  <input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExpansion('${exp.name}', this.checked)">
+		</label>
+	  `).join('');
+		}
 
+		function render() {
+			buildList(expansions.slice(0, 4), document.getElementById('ownedList'));
+			buildList(expansions.slice(4), document.getElementById('moreList'));
+			updateSummary();
+		}
 
-<button onclick="drawCards()">
-🎲 Draw 10 Cards
-</button>
+		function toggleExpansion(name, isChecked) {
+			const exp = expansions.find(e => e.name === name);
+			if (exp) exp.enabled = isChecked;
+			updateSummary();
+		}
 
+		function toggleAccordion() {
+			const wrapper = document.getElementById('expansionWrapper');
+			const icon = document.getElementById('expandIcon');
 
-<div class="footer">
-52 cards total<br>
-26 from Deck A · 26 from Deck B
-</div>
+			wrapper.classList.toggle('hidden');
+			icon.textContent = wrapper.classList.contains('hidden') ? '▼' : '▲';
+		}
 
+		function toggleMoreExpansions() {
+			const moreList = document.getElementById('moreList');
+			const moreBtn = document.getElementById('moreBtn');
 
-</div>
+			const isHidden = moreList.classList.toggle('hidden');
+			moreBtn.textContent = isHidden ? 'More Expansions ▼' : 'Show Less ▲';
+		}
 
+		function updateSummary() {
+			const activeExpansions = expansions.filter(e => e.enabled);
+			const totalCards = activeExpansions.reduce((sum, e) => sum + e.cards, 0);
 
+			document.getElementById('footer').textContent = `${totalCards} randomizer cards selected`;
 
-<script>
+			const resultEl = document.getElementById('result');
+			if (activeExpansions.length === 0) {
+				resultEl.innerHTML = "No expansions selected";
+				return;
+			}
 
+			resultEl.innerHTML = activeExpansions
+				.map(e => `${e.name}: <span>?</span>`)
+				.join('<br>');
+		}
 
-function shuffle(array){
+		function drawCards() {
+			const pool = [];
+			expansions.forEach(e => {
+				if (e.enabled) {
+					for (let i = 0; i < e.cards; i++) pool.push(e.name);
+				}
+			});
 
-    for(let i=array.length-1;i>0;i--){
+			if (pool.length < 10) {
+				document.getElementById('result').textContent = "Select more expansions.";
+				return;
+			}
 
-        const j=Math.floor(Math.random()*(i+1));
+			// Fisher-Yates Shuffle
+			for (let i = pool.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[pool[i], pool[j]] = [pool[j], pool[i]];
+			}
 
-        [array[i],array[j]]=[array[j],array[i]];
-    }
+			const drawn = pool.slice(0, 10);
+			const counts = {};
+			drawn.forEach(name => counts[name] = (counts[name] || 0) + 1);
 
-    return array;
-}
+			const html = expansions
+			    .filter(e => e.enabled)
+				.map(e => `${e.name}: <span>${counts[e.name] || 0}</span>`)
+				.join('<br>');
 
+			document.getElementById('result').innerHTML = html;
 
+			if (navigator.vibrate) {
+				navigator.vibrate(40);
+			}
+		}
 
-function drawCards(){
-
-    const deck=[];
-
-
-    for(let i=0;i<26;i++)
-        deck.push("A");
-
-
-    for(let i=0;i<26;i++)
-        deck.push("B");
-
-
-    shuffle(deck);
-
-
-    const draw=deck.slice(0,10);
-
-
-    let a=0;
-    let b=0;
-
-
-    draw.forEach(card=>{
-
-        if(card==="A")
-            a++;
-        else
-            b++;
-
-    });
-
-
-    document.getElementById("result").innerHTML=
-    `
-    Deck A <span>${a}</span><br>
-    Deck B <span>${b}</span>
-    `;
-
-
-    if(navigator.vibrate){
-        navigator.vibrate(40);
-    }
-
-}
-
-
-</script>
-
-
+		// Initialize UI
+		render();
+	</script>
 </body>
+
 </html>
