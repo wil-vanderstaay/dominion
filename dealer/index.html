@@ -158,12 +158,12 @@
 	<script>
 		const expansions = [
 			{ name: "Base", cards: 26, enabled: true },
+			{ name: "Prosperity", cards: 25, enabled: false },
 			{ name: "Hinterlands", cards: 26, enabled: false },
 			{ name: "Intrigue", cards: 26, enabled: false },
 			{ name: "Renaissance", cards: 25, enabled: false },
 			{ name: "Seaside", cards: 27, enabled: false },
 			{ name: "Alchemy", cards: 12, enabled: false },
-			{ name: "Prosperity", cards: 25, enabled: false },
 			{ name: "Cornucopia", cards: 13, enabled: false },
 			{ name: "Dark Ages", cards: 35, enabled: false },
 			{ name: "Guilds", cards: 13, enabled: false },
@@ -186,8 +186,8 @@
 		}
 
 		function render() {
-			buildList(expansions.slice(0, 4), document.getElementById('ownedList'));
-			buildList(expansions.slice(4), document.getElementById('moreList'));
+			buildList(expansions.slice(0, 5), document.getElementById('ownedList'));
+			buildList(expansions.slice(5), document.getElementById('moreList'));
 			updateSummary();
 		}
 
