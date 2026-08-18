@@ -178,11 +178,11 @@
 
 		function buildList(items, containerEl) {
 			containerEl.innerHTML = items.map(exp => `
-		<label class="expansion">
-		  <span>${exp.name} (${exp.cards})</span>
-		  <input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExpansion('${exp.name}', this.checked)">
-		</label>
-	  `).join('');
+				<label class="expansion">
+					<span>${exp.name} (${exp.cards})</span>
+					<input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExpansion('${exp.name}', this.checked)">
+				</label>
+			`).join('');
 		}
 
 		function render() {
@@ -253,10 +253,22 @@
 			const counts = {};
 			drawn.forEach(name => counts[name] = (counts[name] || 0) + 1);
 
-			const html = expansions
-			    .filter(e => e.enabled)
+			const prosperityExp = expansions.find(e => e.name === 'Prosperity');
+			let includePlatColony = false;
+			
+			if (prosperityExp && prosperityExp.enabled) {
+				const randomPick = drawn[Math.floor(Math.random() * drawn.length)];
+				includePlatColony = (randomPick === 'Prosperity');
+			}
+
+			let html = expansions
+				.filter(e => e.enabled)
 				.map(e => `${e.name}: <span>${counts[e.name] || 0}</span>`)
 				.join('<br>');
+
+			if (prosperityExp && prosperityExp.enabled) {
+				html += `<br>Platinum/Colony: <span>${includePlatColony ? 'Yes' : 'No'}</span>`;
+			}
 
 			document.getElementById('result').innerHTML = html;
 
