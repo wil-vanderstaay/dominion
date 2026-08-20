@@ -30,7 +30,7 @@
 		h1 {
 			text-align: center;
 			font-size: 2.3rem;
-			margin: 0 0 24px;
+			margin: 0 0 20px;
 		}
 
 		.card {
@@ -89,20 +89,33 @@
 		}
 
 		.draw-btn {
-			width: 100%;
-			padding: 22px;
+			flex: 1;
+			padding: 10px;
 			border: none;
 			border-radius: 20px;
-			background: #2563eb;
 			color: #fff;
-			font-size: 1.3rem;
+			font-size: 1.05rem;
 			font-weight: 700;
 			cursor: pointer;
 			margin-bottom: 20px;
+			transition: transform 0.15s;
 		}
 
 		.draw-btn:active {
-			transform: scale(0.97);
+			transform: scale(0.96);
+		}
+
+		.draw-btn.primary {
+			background: #2563eb;
+		}
+
+		.draw-btn.secondary {
+			background: linear-gradient(135deg, #7c3aed, #db2777);
+		}
+
+		.draw-row {
+			display: flex;
+			gap: 12px;
 		}
 
 		#result {
@@ -140,13 +153,15 @@
 
 			<div id="expansionWrapper" class="">
 				<div id="ownedList" class="expansion-list"></div>
-				<button type="button" class="more-btn" id="moreBtn" onclick="toggleMoreExpansions()">More Expansions
-					▼</button>
+				<button type="button" class="more-btn" id="moreBtn" onclick="toggleMoreExpansions()">More Expansions ▼</button>
 				<div id="moreList" class="expansion-list hidden"></div>
 			</div>
 		</div>
 
-		<button class="draw-btn" onclick="drawCards()">🎲 Draw 10 Cards</button>
+		<div class="draw-row">
+			<button class="draw-btn primary" onclick="drawCards()">🎲 Draw 10 Cards</button>
+			<button class="draw-btn secondary" onclick="drawWithRandomMix()">🎰 Random Expansion Mix</button>
+		</div>
 
 		<div class="card">
 			<div id="result"></div>
@@ -230,11 +245,13 @@
 				.join('<br>');
 		}
 
-		function drawCards() {
+		function performDraw(activeExpansions) {
 			const pool = [];
-			expansions.forEach(e => {
+			activeExpansions.forEach(e => {
 				if (e.enabled) {
-					for (let i = 0; i < e.cards; i++) pool.push(e.name);
+					for (let i = 0; i < e.cards; i++) {
+						pool.push(e.name);
+					}
 				}
 			});
 
@@ -243,7 +260,6 @@
 				return;
 			}
 
-			// Fisher-Yates Shuffle
 			for (let i = pool.length - 1; i > 0; i--) {
 				const j = Math.floor(Math.random() * (i + 1));
 				[pool[i], pool[j]] = [pool[j], pool[i]];
@@ -253,28 +269,38 @@
 			const counts = {};
 			drawn.forEach(name => counts[name] = (counts[name] || 0) + 1);
 
-			const prosperityExp = expansions.find(e => e.name === 'Prosperity');
+			const prosperityActive = activeExpansions.some(e => e.name === 'Prosperity');
 			let includePlatColony = false;
 			
-			if (prosperityExp && prosperityExp.enabled) {
+			if (prosperityActive) {
 				const randomPick = drawn[Math.floor(Math.random() * drawn.length)];
 				includePlatColony = (randomPick === 'Prosperity');
 			}
 
-			let html = expansions
-				.filter(e => e.enabled)
+			let html = activeExpansions
 				.map(e => `${e.name}: <span>${counts[e.name] || 0}</span>`)
 				.join('<br>');
 
-			if (prosperityExp && prosperityExp.enabled) {
+			if (prosperityActive) {
 				html += `<br>Platinum/Colony: <span>${includePlatColony ? 'Yes' : 'No'}</span>`;
 			}
 
 			document.getElementById('result').innerHTML = html;
+		}
 
-			if (navigator.vibrate) {
-				navigator.vibrate(40);
+		function drawCards() {
+			const selected = expansions.filter(e => e.enabled);
+			performDraw(selected);
+		}
+
+		function drawWithRandomMix() {
+			const owned = expansions.filter(e => e.enabled);
+
+			let chosen = [];
+			while (chosen.length == 0) {
+				chosen = owned.filter(() => Math.random() < 0.5);
 			}
+			performDraw(chosen);
 		}
 
 		// Initialize UI
