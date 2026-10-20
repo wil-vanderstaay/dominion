@@ -27,10 +27,66 @@
 			padding: 20px;
 		}
 
+		.topbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+
 		h1 {
 			text-align: center;
 			font-size: 2.3rem;
-			margin: 0 0 20px;
+			margin: 0;
+		}
+
+		.icon-btn {
+			flex: none;
+			width: 38px;
+			height: 38px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: #cbd5e1;
+			font-size: 1.1rem;
+			font-weight: 700;
+			line-height: 1;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.modal-actions {
+			display: flex;
+			gap: 8px;
+		}
+
+		.icon-btn.save {
+			background: #16a34a;
+			border-color: #16a34a;
+			color: #fff;
+		}
+
+		.icon-btn.save:hover {
+			background: #15803d;
+		}
+
+		.icon-btn.cancel:hover {
+			background: rgba(220, 38, 38, 0.35);
+			color: #fff;
+		}
+
+		.footnote {
+			margin-top: 18px;
+			padding-top: 12px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			font-size: 0.75rem;
+			line-height: 1.5;
+			color: #6b7280;
+		}
+
+		.icon-btn:hover {
+			background: rgba(255, 255, 255, 0.16);
+			color: #fff;
 		}
 
 		.card {
@@ -66,6 +122,7 @@
 			width: 22px;
 			height: 22px;
 			cursor: pointer;
+			flex: none;
 		}
 
 		.more-btn {
@@ -80,6 +137,58 @@
 			margin-top: 10px;
 			width: 100%;
 			transition: all 0.2s;
+		}
+
+		.more-btn.has-selection {
+			border-style: solid;
+			border-color: rgba(96, 165, 250, 0.6);
+			color: #60a5fa;
+		}
+
+		.bulk-row {
+			display: flex;
+			gap: 8px;
+			margin-top: 12px;
+		}
+
+		.search-row {
+			display: flex;
+			gap: 8px;
+			margin-top: 12px;
+		}
+
+		.search-row input {
+			flex: 1;
+			min-width: 0;
+			padding: 7px 10px;
+			border-radius: 10px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(0, 0, 0, 0.25);
+			color: #fff;
+			font-size: 0.85rem;
+			font-family: inherit;
+		}
+
+		.search-row input::placeholder {
+			color: #6b7280;
+		}
+
+		.bulk-btn {
+			flex: 1;
+			padding: 6px;
+			border-radius: 10px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(255, 255, 255, 0.06);
+			color: #cbd5e1;
+			font-size: 0.8rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.bulk-btn:hover {
+			background: rgba(255, 255, 255, 0.16);
+			color: #fff;
 		}
 
 		.more-btn:hover {
@@ -132,10 +241,270 @@
 		.footer {
 			text-align: center;
 			color: #9ca3af;
+			font-size: 0.88rem;
+			white-space: nowrap;
 		}
 
 		.hidden {
 			display: none !important;
+		}
+
+		/* Modals */
+		.overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(5, 10, 20, 0.7);
+			backdrop-filter: blur(4px);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			z-index: 10;
+		}
+
+		.modal {
+			display: flex;
+			flex-direction: column;
+			width: min(92vw, 430px);
+			max-height: 85vh;
+			background: #16233d;
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			border-radius: 22px;
+			/* Clips the scrolling body to the rounded corners. */
+			overflow: hidden;
+		}
+
+		.modal-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex: none;
+			padding: 18px 20px 12px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		/* Only this scrolls, and its inset padding keeps the scrollbar clear
+		   of the modal's rounded edge. */
+		.modal-body {
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			padding: 4px 20px 20px;
+			scrollbar-width: thin;
+			scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+		}
+
+		.modal-body::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		.modal-body::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		.modal-body::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.22);
+			border-radius: 10px;
+			/* Transparent border narrows the thumb and insets it from the edge. */
+			border: 3px solid transparent;
+			background-clip: content-box;
+		}
+
+		.modal-body::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.38);
+			background-clip: content-box;
+		}
+
+		.modal-header h2 {
+			margin: 0;
+			font-size: 1.4rem;
+		}
+
+		.modal p {
+			line-height: 1.5;
+			color: #d1d5db;
+		}
+
+		.modal p.lead {
+			color: #fff;
+		}
+
+		.modal h3 {
+			font-size: 0.95rem;
+			margin: 18px 0 6px;
+			color: #60a5fa;
+		}
+
+		.setting-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 7px 0;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+		}
+
+		.setting-row input {
+			width: 22px;
+			height: 22px;
+			cursor: pointer;
+			flex: none;
+		}
+
+		.setting-row .name {
+			flex: 1;
+			font-size: 0.95rem;
+		}
+
+		.setting-row .name .meta {
+			display: block;
+			font-size: 0.72rem;
+			font-weight: 400;
+			color: #6b7280;
+		}
+
+		.setting-row.is-owned .name {
+			font-weight: 700;
+		}
+
+		.setting-row:not(.is-owned) .name {
+			color: #9ca3af;
+		}
+
+		.reorder-btn {
+			flex: none;
+			width: 30px;
+			height: 30px;
+			border-radius: 9px;
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: #cbd5e1;
+			cursor: pointer;
+			font-size: 0.8rem;
+			line-height: 1;
+		}
+
+		.reorder-btn:hover:not(:disabled) {
+			background: rgba(255, 255, 255, 0.18);
+			color: #fff;
+		}
+
+		.reorder-btn:disabled {
+			opacity: 0.25;
+			cursor: default;
+		}
+
+		.segmented {
+			display: flex;
+			gap: 8px;
+			margin-bottom: 10px;
+		}
+
+		.mode-btn {
+			flex: 1;
+			padding: 9px 6px;
+			border-radius: 12px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(255, 255, 255, 0.06);
+			color: #cbd5e1;
+			font-size: 0.85rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.mode-btn:hover {
+			background: rgba(255, 255, 255, 0.14);
+		}
+
+		.bulk-btn.active {
+			background: #2563eb;
+			border-color: #2563eb;
+			color: #fff;
+		}
+
+		.mode-btn.active {
+			background: #2563eb;
+			border-color: #2563eb;
+			color: #fff;
+		}
+
+		.stepper {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 4px 0;
+		}
+
+		.stepper .label {
+			flex: 1;
+			font-size: 0.9rem;
+		}
+
+		.stepper .value {
+			min-width: 26px;
+			text-align: center;
+			font-size: 1.05rem;
+			font-weight: 700;
+		}
+
+		.action-btn {
+			width: 100%;
+			padding: 11px;
+			margin-top: 10px;
+			border-radius: 14px;
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(255, 255, 255, 0.08);
+			color: #fff;
+			font-size: 0.95rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.action-btn:hover {
+			background: rgba(255, 255, 255, 0.18);
+		}
+
+		.note {
+			font-size: 0.82rem;
+			line-height: 1.5;
+			color: #9ca3af;
+		}
+
+		.warning {
+			background: rgba(220, 38, 38, 0.15);
+			border: 1px solid rgba(248, 113, 113, 0.4);
+			border-radius: 12px;
+			padding: 10px 12px;
+			font-size: 0.85rem;
+			color: #fca5a5;
+			margin-bottom: 14px;
+		}
+
+		#shareBox {
+			width: 100%;
+			margin-top: 10px;
+			padding: 10px;
+			border-radius: 12px;
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(0, 0, 0, 0.3);
+			color: #cbd5e1;
+			font-family: monospace;
+			font-size: 0.75rem;
+			word-break: break-all;
+			resize: vertical;
+		}
+
+		.toast {
+			position: fixed;
+			bottom: 24px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: #2563eb;
+			padding: 10px 20px;
+			border-radius: 14px;
+			font-weight: 600;
+			font-size: 0.9rem;
+			z-index: 20;
 		}
 	</style>
 </head>
@@ -143,24 +512,28 @@
 <body>
 
 	<div class="container">
-		<h1>Dominion Dealer</h1>
+		<div class="topbar">
+			<button type="button" class="icon-btn" onclick="openModal('help')" aria-label="What is this?">?</button>
+			<h1>Dominion Dealer</h1>
+			<button type="button" class="icon-btn" onclick="openModal('settings')" aria-label="Settings">⚙</button>
+		</div>
 
 		<div class="card">
 			<div class="expansion-header" onclick="toggleAccordion()">
 				<span>Expansions</span>
-				<span id="expandIcon">▼</span>
+				<span id="expandIcon">▲</span>
 			</div>
 
-			<div id="expansionWrapper" class="">
+			<div id="expansionWrapper">
 				<div id="ownedList" class="expansion-list"></div>
-				<button type="button" class="more-btn" id="moreBtn" onclick="toggleMoreExpansions()">More Expansions ▼</button>
+				<button type="button" class="more-btn" id="moreBtn" onclick="toggleMoreExpansions()">More ▼</button>
 				<div id="moreList" class="expansion-list hidden"></div>
 			</div>
 		</div>
 
 		<div class="draw-row">
-			<button class="draw-btn primary" onclick="drawCards()">🎲 Draw 10 Cards</button>
-			<button class="draw-btn secondary" onclick="drawWithRandomMix()">🎰 Random Expansion Mix</button>
+			<button class="draw-btn primary" onclick="drawCards()">🎲 Draw 10</button>
+			<button class="draw-btn secondary" onclick="drawWithRandomMix()">🎰 Random Mix</button>
 		</div>
 
 		<div class="card">
@@ -170,93 +543,766 @@
 		<div class="footer" id="footer"></div>
 	</div>
 
+	<!-- Help -->
+	<div id="helpModal" class="overlay hidden" onclick="closeOnBackdrop(event, 'help')">
+		<div class="modal">
+			<div class="modal-header">
+				<h2>About</h2>
+				<button type="button" class="icon-btn" onclick="closeModal('help')" aria-label="Close">✕</button>
+			</div>
+
+			<div class="modal-body">
+				<p class="lead">Play all your boxes at once, without shuffling every randomizer together.</p>
+				<p>Tick what you own and you'll get how many cards to take from each box — the same spread as one big shuffle, so bigger expansions come up more often.</p>
+
+				<h3>The buttons</h3>
+				<p><strong>🎲 Draw 10</strong> — draws from everything ticked.</p>
+				<p><strong>🎰 Random Mix</strong> — cuts your ticks down to a random few first. Set how many in ⚙.</p>
+
+				<h3>Splits, not cards</h3>
+				<p>Shuffle each box's own randomizers and take the number shown. That's your Kingdom.</p>
+
+				<h3>Platinum &amp; Colony</h3>
+				<p>With Prosperity in, one of the ten cards is picked at random. If it came from Prosperity, play with Platinum and Colony.</p>
+
+				<h3>Your setup</h3>
+				<p>⚙ sets what you own and the list order. Remembered on this device.</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Settings -->
+	<div id="settingsModal" class="overlay hidden" onclick="closeOnBackdrop(event, 'settings')">
+		<div class="modal">
+			<div class="modal-header">
+				<h2>Settings</h2>
+				<div class="modal-actions">
+					<button type="button" class="icon-btn cancel" onclick="cancelSettings()" aria-label="Discard changes">✕</button>
+					<button type="button" class="icon-btn save" onclick="saveSettings()" aria-label="Save changes">✓</button>
+				</div>
+			</div>
+
+			<div class="modal-body">
+			<div id="storageWarning" class="warning hidden">
+				Can't save settings here (private browsing?). Use the setup link below to restore them later.
+			</div>
+
+			<p class="note">Tick what you own — the rest sits under <strong>More</strong>. Sort or use the arrows to reorder. ✓ saves, ✕ discards.</p>
+
+			<div class="search-row">
+				<input type="text" id="settingsSearch" placeholder="Search" autocomplete="off"
+					oninput="setSearch(this.value)">
+				<button type="button" class="reorder-btn" id="clearSearch" onclick="clearSearch()" aria-label="Clear search">✕</button>
+			</div>
+
+			<div class="bulk-row">
+				<button type="button" class="bulk-btn" id="sortAlpha" onclick="sortBy('alpha')">A\u2013Z</button>
+				<button type="button" class="bulk-btn" id="sortPop" onclick="sortBy('pop')">Popularity*</button>
+				<button type="button" class="bulk-btn" id="sortYear" onclick="sortBy('year')">Release</button>
+			</div>
+			<p class="note" id="sortHint"></p>
+
+			<div id="settingsList"></div>
+
+			<button type="button" class="action-btn" onclick="resetSettings()">Reset</button>
+
+			<h3>Random Mix</h3>
+			<p class="note">What 🎰 Random Mix picks from.</p>
+			<div class="segmented">
+				<button type="button" class="mode-btn" id="modeAny" onclick="setMixMode('any')">Any</button>
+				<button type="button" class="mode-btn" id="modeBase" onclick="setMixMode('base')">Base + others</button>
+			</div>
+			<div class="stepper">
+				<span class="label">How many</span>
+				<button type="button" class="reorder-btn" onclick="changeMixSize(-1)" aria-label="Fewer">−</button>
+				<span class="value" id="mixSizeValue">2</span>
+				<button type="button" class="reorder-btn" onclick="changeMixSize(1)" aria-label="More">+</button>
+			</div>
+			<p class="note" id="mixHint"></p>
+
+			<h3>Back up</h3>
+			<p class="note">Saved in this browser only, and some browsers clear it after a week or two. This link holds your whole setup — bookmark it, or open it on another device.</p>
+			<button type="button" class="action-btn" onclick="copySetupLink()">Copy link</button>
+			<textarea id="shareBox" rows="3" readonly onclick="this.select()"></textarea>
+
+			<p class="footnote">* A rough ranking kept by hand from BoardGameGeek ratings and community
+				consensus — not live data. Reorder with the arrows to suit yourself. Card counts and dates come
+				from Wikipedia and the Dominion wiki.</p>
+			</div>
+		</div>
+	</div>
+
 	<script>
-		const expansions = [
-			{ name: "Base", cards: 26, enabled: true },
-			{ name: "Prosperity", cards: 25, enabled: false },
-			{ name: "Hinterlands", cards: 26, enabled: false },
-			{ name: "Intrigue", cards: 26, enabled: false },
-			{ name: "Renaissance", cards: 25, enabled: false },
-			{ name: "Seaside", cards: 27, enabled: false },
-			{ name: "Alchemy", cards: 12, enabled: false },
-			{ name: "Cornucopia", cards: 13, enabled: false },
-			{ name: "Dark Ages", cards: 35, enabled: false },
-			{ name: "Guilds", cards: 13, enabled: false },
-			{ name: "Adventures", cards: 30, enabled: false },
-			{ name: "Empires", cards: 24, enabled: false },
-			{ name: "Nocturne", cards: 33, enabled: false },
-			{ name: "Menagerie", cards: 30, enabled: false },
-			{ name: "Allies", cards: 31, enabled: false },
-			{ name: "Plunder", cards: 40, enabled: false },
-			{ name: "Rising Sun", cards: 25, enabled: false }
+		// Canonical list — never reordered. Index position is the stable id used in setup links.
+		// id is permanent — setup links are encoded with it, so ids must never be
+		// reused or renumbered. New expansions just take the next free id.
+		//
+		// Where a 2nd edition changed the number of Kingdom cards, the editions are
+		// listed separately because they weight the draw differently. Where the count
+		// is unchanged (Prosperity, Hinterlands, Cornucopia, Guilds) there is a single
+		// entry, dated to the most recent edition.
+		//
+		// pop = popularity rank, 1 = most popular. See README — it's a judgement call,
+		// not fetched data, and editions of one expansion share a rank.
+		const MASTER = [
+			{ id: 1, name: "Base 1E", cards: 25, year: 2008, pop: 16 },
+			{ id: 2, name: "Base 2E", cards: 26, year: 2016, pop: 16 },
+			{ id: 3, name: "Intrigue 1E", cards: 25, year: 2009, pop: 9 },
+			{ id: 4, name: "Intrigue 2E", cards: 26, year: 2016, pop: 9 },
+			{ id: 5, name: "Seaside 1E", cards: 26, year: 2009, pop: 8 },
+			{ id: 6, name: "Seaside 2E", cards: 27, year: 2022, pop: 8 },
+			{ id: 7, name: "Alchemy", cards: 12, year: 2010, pop: 17 },
+			{ id: 8, name: "Prosperity", cards: 25, year: 2022, pop: 1 },
+			{ id: 9, name: "Cornucopia", cards: 13, year: 2024, pop: 14 },
+			{ id: 10, name: "Hinterlands", cards: 26, year: 2022, pop: 10 },
+			{ id: 11, name: "Dark Ages", cards: 35, year: 2012, pop: 7 },
+			{ id: 12, name: "Guilds", cards: 13, year: 2024, pop: 15 },
+			{ id: 13, name: "Adventures", cards: 30, year: 2015, pop: 6 },
+			{ id: 14, name: "Empires", cards: 24, year: 2016, pop: 2 },
+			{ id: 15, name: "Nocturne", cards: 33, year: 2017, pop: 11 },
+			{ id: 16, name: "Renaissance", cards: 25, year: 2018, pop: 5 },
+			{ id: 17, name: "Menagerie", cards: 30, year: 2020, pop: 4 },
+			{ id: 18, name: "Allies", cards: 31, year: 2022, pop: 12 },
+			{ id: 19, name: "Plunder", cards: 40, year: 2022, pop: 3 },
+			{ id: 20, name: "Rising Sun", cards: 25, year: 2024, pop: 13 }
 		];
 
-		function buildList(items, containerEl) {
-			containerEl.innerHTML = items.map(exp => `
+		// Saved setups from before the editions split used bare names.
+		const LEGACY_NAMES = {
+			"Base": "Base 2E",
+			"Intrigue": "Intrigue 2E",
+			"Seaside": "Seaside 2E"
+		};
+
+		const DEFAULT_OWNED = ["Base 2E", "Prosperity", "Hinterlands", "Intrigue 2E", "Renaissance"];
+		const DEFAULT_SELECTED = ["Base 2E"];
+		const STORAGE_KEY = "dominionDealer.v1";
+		const SETUP_VERSION = 4;
+		const DEFAULT_MIX_MODE = "any";
+		const DEFAULT_MIX_SIZE = 2;
+
+		let order = MASTER.map(e => e.name);
+		let owned = new Set(DEFAULT_OWNED);
+		let selected = new Set(DEFAULT_SELECTED);
+		let mixMode = DEFAULT_MIX_MODE;
+		let mixSize = DEFAULT_MIX_SIZE;
+		let sortKey = null;
+		let sortDir = 1;
+		let storageWorks = true;
+
+		const info = name => MASTER.find(e => e.name === name);
+		const cardsIn = name => info(name).cards;
+		const isBase = name => name.indexOf("Base") === 0;
+
+		/* ---------- Persistence ---------- */
+
+		function saveState() {
+			if (!storageWorks) return;
+			try {
+				localStorage.setItem(STORAGE_KEY, JSON.stringify({
+					order: order,
+					owned: [...owned],
+					selected: [...selected],
+					mixMode: mixMode,
+					mixSize: mixSize,
+					sortKey: sortKey,
+					sortDir: sortDir
+				}));
+			} catch (err) {
+				storageWorks = false;
+				updateStorageWarning();
+			}
+		}
+
+		function loadState() {
+			let saved = null;
+			try {
+				saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+			} catch (err) {
+				storageWorks = false;
+			}
+			if (saved) applyState(saved);
+		}
+
+		// Keeps only names we recognise, and appends any expansion the saved
+		// setup predates, so old setups survive new expansions being added.
+		function applyState(data) {
+			const known = new Set(MASTER.map(e => e.name));
+			const migrate = list => (list || [])
+				.map(n => LEGACY_NAMES[n] || n)
+				.filter(n => known.has(n));
+
+			const fromSave = migrate(data.order);
+			const missing = MASTER.map(e => e.name).filter(n => !fromSave.includes(n));
+
+			order = fromSave.concat(missing);
+			owned = new Set(migrate(data.owned));
+			selected = new Set(migrate(data.selected));
+			mixMode = data.mixMode === "base" ? "base" : DEFAULT_MIX_MODE;
+			mixSize = clampMixSize(data.mixSize);
+			sortKey = SORTS[data.sortKey] ? data.sortKey : null;
+			sortDir = data.sortDir === -1 ? -1 : 1;
+		}
+
+		function clampMixSize(value) {
+			const n = Math.round(Number(value));
+			if (!Number.isFinite(n)) return DEFAULT_MIX_SIZE;
+			return Math.min(Math.max(n, 1), MASTER.length);
+		}
+
+		/* ---------- Setup links ---------- */
+
+		// The setup is bit-packed rather than written out as numbers, which keeps a
+		// typical link around a dozen characters instead of well over a hundred.
+		//
+		// layout:  4b version | 6b idCount | 3b sortMode
+		//          sortMode 5 only: idCount x 6b  (an explicit hand-made order)
+		//          idCount x 1b owned | idCount x 1b selected | 1b mixMode | 6b mixSize
+		//
+		// The owned/selected flags are indexed by id, not by position, so they survive
+		// reordering. Any order that came from a sort is stored as just the sort itself
+		// and recomputed on the way out, which is where most of the saving comes from.
+		// 6-bit fields cap this at 63 expansions; widen them if that day ever comes.
+		function bitWriter() {
+			const bytes = [];
+			let cur = 0, used = 0;
+			return {
+				write(value, width) {
+					for (let i = width - 1; i >= 0; i--) {
+						cur = (cur << 1) | ((value >> i) & 1);
+						if (++used === 8) { bytes.push(cur); cur = 0; used = 0; }
+					}
+				},
+				bytes: () => used ? bytes.concat([cur << (8 - used)]) : bytes
+			};
+		}
+
+		function bitReader(bytes) {
+			let pos = 0;
+			return {
+				read(width) {
+					let value = 0;
+					for (let i = 0; i < width; i++, pos++) {
+						const byte = bytes[pos >> 3] || 0;
+						value = (value << 1) | ((byte >> (7 - (pos & 7))) & 1);
+					}
+					return value;
+				}
+			};
+		}
+
+		function toBase64Url(bytes) {
+			let binary = "";
+			bytes.forEach(b => binary += String.fromCharCode(b));
+			return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+		}
+
+		function fromBase64Url(code) {
+			const binary = atob(code.replace(/-/g, "+").replace(/_/g, "/"));
+			const bytes = [];
+			for (let i = 0; i < binary.length; i++) bytes.push(binary.charCodeAt(i));
+			return bytes;
+		}
+
+		// dir 1 uses the first arrow/hint, dir -1 the second. The arrow describes the
+		// order you actually see, which is why popularity's is inverted: rank 1 is the
+		// MOST popular, so ascending rank puts popularity in descending order.
+		// Link codes are `code` for dir 1 and `code + 1` for dir -1.
+		const SORTS = {
+			pop: {
+				code: 1,
+				compare: (a, b) => a.pop - b.pop,
+				label: "Popularity*",
+				arrows: ["\u25BC", "\u25B2"],
+				hints: ["Most popular first.", "Least popular first."]
+			},
+			year: {
+				code: 3,
+				compare: (a, b) => a.year - b.year,
+				label: "Release",
+				arrows: ["\u25B2", "\u25BC"],
+				hints: ["Oldest first.", "Newest first."]
+			},
+			alpha: {
+				code: 5,
+				compare: (a, b) => a.name.localeCompare(b.name),
+				label: "A\u2013Z",
+				arrows: ["\u25B2", "\u25BC"],
+				hints: ["A to Z.", "Z to A."]
+			}
+		};
+
+		const CUSTOM_ORDER_CODE = 7;
+
+		function sortFromCode(code) {
+			for (const key in SORTS) {
+				if (SORTS[key].code === code) return { key: key, dir: 1 };
+				if (SORTS[key].code + 1 === code) return { key: key, dir: -1 };
+			}
+			return null;
+		}
+
+		const defaultOrder = () => MASTER.map(e => e.name);
+
+		// Sorting is a total order (ties break on id), so this reproduces exactly what
+		// applySort would have produced, whatever the list looked like beforehand.
+		function sortedOrder(key, dir) {
+			const state = { order: defaultOrder(), sortKey: key, sortDir: dir };
+			applySort(state);
+			return state.order;
+		}
+
+		function encodeSetup(state) {
+			const idCount = MASTER.length;
+			const cfg = SORTS[state.sortKey];
+			const isDefault = state.order.join("\u0000") === defaultOrder().join("\u0000");
+			const sortMode = cfg
+				? cfg.code + (state.sortDir === 1 ? 0 : 1)
+				: (isDefault ? 0 : CUSTOM_ORDER_CODE);
+
+			const out = bitWriter();
+			out.write(SETUP_VERSION, 4);
+			out.write(idCount, 6);
+			out.write(sortMode, 3);
+
+			if (sortMode === CUSTOM_ORDER_CODE) state.order.forEach(n => out.write(info(n).id, 6));
+
+			for (let id = 1; id <= idCount; id++) {
+				out.write(state.owned.has(MASTER[id - 1].name) ? 1 : 0, 1);
+			}
+			for (let id = 1; id <= idCount; id++) {
+				out.write(state.selected.has(MASTER[id - 1].name) ? 1 : 0, 1);
+			}
+
+			out.write(state.mixMode === "base" ? 1 : 0, 1);
+			out.write(state.mixSize, 6);
+
+			return toBase64Url(out.bytes());
+		}
+
+		function decodeSetup(code) {
+			const bits = bitReader(fromBase64Url(code));
+			if (bits.read(4) !== SETUP_VERSION) throw new Error("unsupported setup link");
+
+			const idCount = bits.read(6);
+			const sortMode = bits.read(3);
+			if (idCount === 0 || idCount > MASTER.length) throw new Error("bad setup link");
+
+			const byId = new Map(MASTER.map(e => [e.id, e.name]));
+			const sort = sortFromCode(sortMode);
+
+			let order;
+			if (sortMode === CUSTOM_ORDER_CODE) {
+				order = [];
+				for (let i = 0; i < idCount; i++) {
+					const name = byId.get(bits.read(6));
+					if (name) order.push(name);
+				}
+			} else if (sort) {
+				order = sortedOrder(sort.key, sort.dir);
+			} else {
+				order = defaultOrder();
+			}
+
+			const owned = [], selected = [];
+			for (let id = 1; id <= idCount; id++) {
+				if (bits.read(1)) owned.push(byId.get(id));
+			}
+			for (let id = 1; id <= idCount; id++) {
+				if (bits.read(1)) selected.push(byId.get(id));
+			}
+
+			return {
+				order: order,
+				owned: owned.filter(Boolean),
+				selected: selected.filter(Boolean),
+				mixMode: bits.read(1) === 1 ? "base" : DEFAULT_MIX_MODE,
+				mixSize: clampMixSize(bits.read(6)),
+				sortKey: sort ? sort.key : null,
+				sortDir: sort ? sort.dir : 1
+			};
+		}
+
+		function liveState() {
+			return { order, owned, selected, mixMode, mixSize, sortKey, sortDir };
+		}
+
+		function setupLink(state) {
+			return location.origin + location.pathname + "#setup=" + encodeSetup(state || liveState());
+		}
+
+		function readSetupFromUrl() {
+			const match = location.hash.match(/setup=([A-Za-z0-9\-_]+)/);
+			if (!match) return;
+			try {
+				applyState(decodeSetup(match[1]));
+				saveState();
+			} catch (err) {
+				// Mangled link — fall back to whatever was already loaded.
+			}
+
+			try {
+				history.replaceState(null, "", location.pathname);
+			} catch (err) {
+				// file:// URLs reject replaceState; the stale hash is harmless.
+			}
+		}
+
+		function copySetupLink() {
+			const link = setupLink(draft || liveState());
+			document.getElementById("shareBox").value = link;
+
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(link)
+					.then(() => showToast("Link copied"))
+					.catch(() => showToast("Copy it below"));
+			} else {
+				showToast("Copy it below");
+			}
+		}
+
+		function showToast(message) {
+			const existing = document.querySelector(".toast");
+			if (existing) existing.remove();
+
+			const toast = document.createElement("div");
+			toast.className = "toast";
+			toast.textContent = message;
+			document.body.appendChild(toast);
+			setTimeout(() => toast.remove(), 2200);
+		}
+
+		/* ---------- Main list ---------- */
+
+		function buildList(names, containerEl) {
+			containerEl.innerHTML = names.map(name => `
 				<label class="expansion">
-					<span>${exp.name} (${exp.cards})</span>
-					<input type="checkbox" ${exp.enabled ? 'checked' : ''} onchange="toggleExpansion('${exp.name}', this.checked)">
+					<span>${name} (${cardsIn(name)})</span>
+					<input type="checkbox" ${selected.has(name) ? "checked" : ""} onchange="toggleExpansion('${name}', this.checked)">
 				</label>
-			`).join('');
+			`).join("");
 		}
 
 		function render() {
-			buildList(expansions.slice(0, 5), document.getElementById('ownedList'));
-			buildList(expansions.slice(5), document.getElementById('moreList'));
+			const ownedNames = order.filter(n => owned.has(n));
+			const otherNames = order.filter(n => !owned.has(n));
+
+			buildList(ownedNames, document.getElementById("ownedList"));
+			buildList(otherNames, document.getElementById("moreList"));
+
+			// Nothing to hide away if every expansion is marked as owned.
+			document.getElementById("moreBtn").classList.toggle("hidden", otherNames.length === 0);
+			if (otherNames.length === 0) document.getElementById("moreList").classList.add("hidden");
+			updateMoreButton();
+
+			if (ownedNames.length === 0) {
+				document.getElementById("ownedList").innerHTML =
+					'<span class="note">Pick your owned expansions in ⚙</span>';
+			}
+
 			updateSummary();
 		}
 
 		function toggleExpansion(name, isChecked) {
-			const exp = expansions.find(e => e.name === name);
-			if (exp) exp.enabled = isChecked;
+			if (isChecked) {
+				selected.add(name);
+			} else {
+				selected.delete(name);
+			}
+			saveState();
+			updateMoreButton();
 			updateSummary();
 		}
 
 		function toggleAccordion() {
-			const wrapper = document.getElementById('expansionWrapper');
-			const icon = document.getElementById('expandIcon');
+			const wrapper = document.getElementById("expansionWrapper");
+			const icon = document.getElementById("expandIcon");
 
-			wrapper.classList.toggle('hidden');
-			icon.textContent = wrapper.classList.contains('hidden') ? '▼' : '▲';
+			wrapper.classList.toggle("hidden");
+			icon.textContent = wrapper.classList.contains("hidden") ? "▼" : "▲";
+		}
+
+		function moreIsVisible() {
+			return !document.getElementById("moreList").classList.contains("hidden");
 		}
 
 		function toggleMoreExpansions() {
-			const moreList = document.getElementById('moreList');
-			const moreBtn = document.getElementById('moreBtn');
-
-			const isHidden = moreList.classList.toggle('hidden');
-			moreBtn.textContent = isHidden ? 'More Expansions ▼' : 'Show Less ▲';
+			document.getElementById("moreList").classList.toggle("hidden");
+			updateMoreButton();
 		}
 
-		function updateSummary() {
-			const activeExpansions = expansions.filter(e => e.enabled);
-			const totalCards = activeExpansions.reduce((sum, e) => sum + e.cards, 0);
+		// Flags selections tucked away out of sight, so a collapsed section never
+		// quietly feeds expansions into the draw.
+		function updateMoreButton() {
+			const moreBtn = document.getElementById("moreBtn");
 
-			document.getElementById('footer').textContent = `${totalCards} randomizer cards selected`;
-
-			const resultEl = document.getElementById('result');
-			if (activeExpansions.length === 0) {
-				resultEl.innerHTML = "No expansions selected";
+			if (moreIsVisible()) {
+				moreBtn.textContent = "Less ▲";
+				moreBtn.classList.remove("has-selection");
 				return;
 			}
 
-			resultEl.innerHTML = activeExpansions
-				.map(e => `${e.name}: <span>?</span>`)
-				.join('<br>');
+			const hiddenCount = order.filter(n => !owned.has(n) && selected.has(n)).length;
+			moreBtn.textContent = hiddenCount
+				? `More (${hiddenCount} ticked) ▼`
+				: "More ▼";
+			moreBtn.classList.toggle("has-selection", hiddenCount > 0);
 		}
 
-		function performDraw(activeExpansions) {
+		function activeNames() {
+			return order.filter(n => selected.has(n));
+		}
+
+		function updateSummary() {
+			const active = activeNames();
+			const totalCards = active.reduce((sum, n) => sum + cardsIn(n), 0);
+			const boxes = `${active.length} ${active.length === 1 ? "expansion" : "expansions"}`;
+
+			document.getElementById("footer").textContent = `${boxes} \u00B7 ${totalCards} cards`;
+
+			const resultEl = document.getElementById("result");
+			if (active.length === 0) {
+				resultEl.innerHTML = "Nothing ticked";
+				return;
+			}
+
+			resultEl.innerHTML = active.map(n => `${n}: <span>?</span>`).join("<br>");
+		}
+
+		/* ---------- Settings ---------- */
+
+		// Everything in the settings modal edits this copy, not the live state, so a
+		// stray sort can't destroy an order you spent time arranging. Nothing takes
+		// effect until you press the tick.
+		let draft = null;
+		let settingsSearch = "";
+
+		function openSettings() {
+			draft = {
+				order: order.slice(),
+				owned: new Set(owned),
+				selected: new Set(selected),
+				mixMode: mixMode,
+				mixSize: mixSize,
+				sortKey: sortKey,
+				sortDir: sortDir
+			};
+			settingsSearch = "";
+			document.getElementById("settingsSearch").value = "";
+			renderSettings();
+			document.getElementById("settingsModal").classList.remove("hidden");
+		}
+
+		function saveSettings() {
+			order = draft.order.slice();
+			owned = new Set(draft.owned);
+			selected = new Set(draft.selected);
+			mixMode = draft.mixMode;
+			mixSize = draft.mixSize;
+			sortKey = draft.sortKey;
+			sortDir = draft.sortDir;
+
+			saveState();
+			render();
+			closeModal("settings");
+			showToast("Saved");
+		}
+
+		function cancelSettings() {
+			draft = null;
+			closeModal("settings");
+		}
+
+		function renderSettings() {
+			renderMixSettings();
+			renderSortControls();
+
+			// Filtering only hides rows; it never touches what's owned or ticked. Moving
+			// is switched off while filtered, since the neighbour you'd swap with may be
+			// hidden from view.
+			const term = settingsSearch.trim().toLowerCase();
+			const filtered = term.length > 0;
+			const rows = draft.order
+				.map((name, i) => ({ name: name, i: i }))
+				.filter(row => !filtered || row.name.toLowerCase().indexOf(term) !== -1);
+
+			document.getElementById("clearSearch").disabled = !filtered;
+			document.getElementById("settingsList").innerHTML = rows.length === 0
+				? '<p class="note">No matches</p>'
+				: rows.map(({ name, i }) => `
+				<div class="setting-row ${draft.owned.has(name) ? "is-owned" : ""}">
+					<input type="checkbox" ${draft.owned.has(name) ? "checked" : ""} onchange="toggleOwned('${name}', this.checked)">
+					<span class="name">${name}<span class="meta">${cardsIn(name)} cards \u00B7 ${info(name).year}</span></span>
+					<button type="button" class="reorder-btn" onclick="moveExpansion(${i}, -1)" ${filtered || i === 0 ? "disabled" : ""} aria-label="Move up">▲</button>
+					<button type="button" class="reorder-btn" onclick="moveExpansion(${i}, 1)" ${filtered || i === draft.order.length - 1 ? "disabled" : ""} aria-label="Move down">▼</button>
+				</div>
+			`).join("");
+
+			document.getElementById("shareBox").value = setupLink(draft);
+		}
+
+		function setSearch(value) {
+			settingsSearch = value;
+			renderSettings();
+		}
+
+		function clearSearch() {
+			settingsSearch = "";
+			document.getElementById("settingsSearch").value = "";
+			renderSettings();
+		}
+
+		function toggleOwned(name, isOwned) {
+			if (isOwned) {
+				draft.owned.add(name);
+			} else {
+				draft.owned.delete(name);
+			}
+			renderSettings();
+		}
+
+		// Each button cycles: first click sorts, second flips it, third clears back
+		// to the default order.
+		function sortBy(key) {
+			if (draft.sortKey !== key) {
+				draft.sortKey = key;
+				draft.sortDir = 1;
+			} else if (draft.sortDir === 1) {
+				draft.sortDir = -1;
+			} else {
+				draft.sortKey = null;
+				draft.sortDir = 1;
+				draft.order = defaultOrder();
+			}
+			applySort(draft);
+			renderSettings();
+		}
+
+		function applySort(state) {
+			const cfg = SORTS[state.sortKey];
+			if (!cfg) return;
+			state.order = state.order.slice().sort((a, b) => {
+				const diff = cfg.compare(info(a), info(b)) * state.sortDir;
+				// Ties (same year, or two editions sharing a rank) keep list order.
+				return diff || info(a).id - info(b).id;
+			});
+		}
+
+		function renderSortControls() {
+			const slot = draft.sortDir === 1 ? 0 : 1;
+			const ids = { alpha: "sortAlpha", pop: "sortPop", year: "sortYear" };
+
+			for (const key in SORTS) {
+				const cfg = SORTS[key];
+				const active = draft.sortKey === key;
+				const el = document.getElementById(ids[key]);
+				el.textContent = cfg.label + (active ? " " + cfg.arrows[slot] : "");
+				el.classList.toggle("active", active);
+			}
+
+			const cfg = SORTS[draft.sortKey];
+			document.getElementById("sortHint").textContent = cfg
+				? cfg.hints[slot]
+				: "Default: Base first, then by release.";
+		}
+
+		function setMixMode(mode) {
+			draft.mixMode = mode;
+			renderMixSettings();
+		}
+
+		function changeMixSize(delta) {
+			draft.mixSize = clampMixSize(draft.mixSize + delta);
+			renderMixSettings();
+		}
+
+		function renderMixSettings() {
+			const mixMode = draft.mixMode;
+			const mixSize = draft.mixSize;
+
+			document.getElementById("modeAny").classList.toggle("active", mixMode === "any");
+			document.getElementById("modeBase").classList.toggle("active", mixMode === "base");
+			document.getElementById("mixSizeValue").textContent = mixSize;
+
+			const others = mixSize - 1;
+			const count = n => `${n} ${n === 1 ? "expansion" : "expansions"}`;
+
+			document.getElementById("mixHint").textContent = mixMode === "base"
+				? (others === 0 ? "Base only." : `Base + ${count(others)} at random.`)
+				: `${count(mixSize)} at random.`;
+		}
+
+		function moveExpansion(index, direction) {
+			const target = index + direction;
+			if (target < 0 || target >= draft.order.length) return;
+
+			const list = draft.order;
+			[list[index], list[target]] = [list[target], list[index]];
+			draft.sortKey = null;
+			renderSettings();
+		}
+
+		function resetSettings() {
+			draft = {
+				order: MASTER.map(e => e.name),
+				owned: new Set(DEFAULT_OWNED),
+				selected: new Set(DEFAULT_SELECTED),
+				mixMode: DEFAULT_MIX_MODE,
+				mixSize: DEFAULT_MIX_SIZE,
+				sortKey: null,
+				sortDir: 1
+			};
+			renderSettings();
+			showToast("Reset \u2014 \u2713 to keep");
+		}
+
+		function updateStorageWarning() {
+			document.getElementById("storageWarning").classList.toggle("hidden", storageWorks);
+		}
+
+		/* ---------- Modals ---------- */
+
+		function openModal(which) {
+			if (which === "settings") {
+				openSettings();
+				return;
+			}
+			document.getElementById(which + "Modal").classList.remove("hidden");
+		}
+
+		function closeModal(which) {
+			document.getElementById(which + "Modal").classList.add("hidden");
+		}
+
+		// Tapping outside or pressing Escape discards, same as the ✕ button.
+		function closeOnBackdrop(event, which) {
+			if (event.target !== event.currentTarget) return;
+			if (which === "settings") {
+				cancelSettings();
+			} else {
+				closeModal(which);
+			}
+		}
+
+		document.addEventListener("keydown", event => {
+			if (event.key === "Escape") {
+				closeModal("help");
+				cancelSettings();
+			}
+		});
+
+		/* ---------- Drawing ---------- */
+
+		function performDraw(names) {
 			const pool = [];
-			activeExpansions.forEach(e => {
-				if (e.enabled) {
-					for (let i = 0; i < e.cards; i++) {
-						pool.push(e.name);
-					}
+			names.forEach(name => {
+				for (let i = 0; i < cardsIn(name); i++) {
+					pool.push(name);
 				}
 			});
 
 			if (pool.length < 10) {
-				document.getElementById('result').textContent = "Select more expansions.";
+				document.getElementById("result").textContent = "Not enough cards.";
 				return;
 			}
 
@@ -269,41 +1315,85 @@
 			const counts = {};
 			drawn.forEach(name => counts[name] = (counts[name] || 0) + 1);
 
-			const prosperityActive = activeExpansions.some(e => e.name === 'Prosperity');
+			const prosperityActive = names.includes("Prosperity");
 			let includePlatColony = false;
-			
+
 			if (prosperityActive) {
 				const randomPick = drawn[Math.floor(Math.random() * drawn.length)];
-				includePlatColony = (randomPick === 'Prosperity');
+				includePlatColony = (randomPick === "Prosperity");
 			}
 
-			let html = activeExpansions
-				.map(e => `${e.name}: <span>${counts[e.name] || 0}</span>`)
-				.join('<br>');
+			let html = names
+				.filter(name => counts[name])
+				.map(name => `${name}: <span>${counts[name]}</span>`)
+				.join("<br>");
 
 			if (prosperityActive) {
-				html += `<br>Platinum/Colony: <span>${includePlatColony ? 'Yes' : 'No'}</span>`;
+				html += `<br>Platinum/Colony: <span>${includePlatColony ? "Yes" : "No"}</span>`;
 			}
 
-			document.getElementById('result').innerHTML = html;
+			document.getElementById("result").innerHTML = html;
 		}
 
 		function drawCards() {
-			const selected = expansions.filter(e => e.enabled);
-			performDraw(selected);
+			performDraw(activeNames());
+		}
+
+		function pickRandom(names, count) {
+			const pool = names.slice();
+			for (let i = pool.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[pool[i], pool[j]] = [pool[j], pool[i]];
+			}
+			// slice clamps on its own when fewer are ticked than asked for.
+			return pool.slice(0, Math.max(0, count));
 		}
 
 		function drawWithRandomMix() {
-			const owned = expansions.filter(e => e.enabled);
+			const active = activeNames();
+			const resultEl = document.getElementById("result");
 
-			let chosen = [];
-			while (chosen.length == 0) {
-				chosen = owned.filter(() => Math.random() < 0.5);
+			if (active.length === 0) {
+				resultEl.textContent = "Not enough cards.";
+				return;
 			}
-			performDraw(chosen);
+
+			let chosen;
+			if (mixMode === "base") {
+				const baseNames = active.filter(isBase);
+				if (baseNames.length === 0) {
+					resultEl.textContent = "Tick Base, or change the mode in ⚙.";
+					return;
+				}
+				// With both editions ticked, one of them stands in as Base.
+				const base = pickRandom(baseNames, 1);
+				chosen = base.concat(pickRandom(active.filter(n => !isBase(n)), mixSize - 1));
+			} else {
+				chosen = pickRandom(active, mixSize);
+			}
+
+			// Re-sort into list order so results always read the same way.
+			performDraw(order.filter(n => chosen.includes(n)));
 		}
 
-		// Initialize UI
+		/* ---------- Boot ---------- */
+
+		try {
+			localStorage.setItem(STORAGE_KEY + ".test", "1");
+			localStorage.removeItem(STORAGE_KEY + ".test");
+		} catch (err) {
+			storageWorks = false;
+		}
+
+		// Ask the browser not to evict our settings. Chrome and Firefox honour this;
+		// Safari ignores it unless the app is added to the home screen.
+		if (navigator.storage && navigator.storage.persist) {
+			navigator.storage.persist().catch(() => { });
+		}
+
+		loadState();
+		readSetupFromUrl();
+		updateStorageWarning();
 		render();
 	</script>
 </body>
